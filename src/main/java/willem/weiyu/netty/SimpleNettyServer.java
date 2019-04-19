@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.EventLoopGroup;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -17,8 +18,9 @@ import io.netty.handler.codec.string.StringDecoder;
 public class SimpleNettyServer {
     public static void main(String[] args) throws InterruptedException {
         ServerBootstrap bootstrap = new ServerBootstrap();
-        NioEventLoopGroup group = new NioEventLoopGroup();
-        NioEventLoopGroup worker = new NioEventLoopGroup();
+        EventLoopGroup group = new NioEventLoopGroup();
+        EventLoopGroup worker = new NioEventLoopGroup();
+        //指定两个eventLoopGroup，一个用于监听连接事件，一个用于处理连接事件，提高并发能力
         bootstrap.group(group, worker).channel(NioServerSocketChannel.class).childHandler(new ChannelInitializer() {
             @Override
             protected void initChannel(Channel ch) throws Exception {
