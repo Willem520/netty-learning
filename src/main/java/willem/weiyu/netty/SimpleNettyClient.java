@@ -5,7 +5,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 /**
@@ -25,8 +24,7 @@ public class SimpleNettyClient {
             }
         });
         Channel channel = bootstrap.connect("127.0.0.1", 8088).channel();
-        int loop =0;
-        while (loop++ < 5){
+        while (true){
             channel.writeAndFlush(System.currentTimeMillis()+": hello netty");
             Thread.sleep(200);
         }
